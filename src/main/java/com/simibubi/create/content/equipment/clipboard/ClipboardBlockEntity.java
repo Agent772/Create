@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllDataComponents;
 import com.simibubi.create.content.logistics.AddressEditBoxHelper;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
@@ -17,11 +18,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 public class ClipboardBlockEntity extends SmartBlockEntity {
 
+	@Deprecated(forRemoval = true)
 	public ItemStack dataContainer;
 	private UUID lastEdit;
 
@@ -94,7 +97,7 @@ public class ClipboardBlockEntity extends SmartBlockEntity {
 			return;
 		if (!worldPosition.equals(cs.targetedBlock))
 			return;
-		cs.reopenWith(dataContainer);
+		cs.reopenWith(components().getOrDefault(AllDataComponents.CLIPBOARD_CONTENT, ClipboardContent.EMPTY));
 	}
 
 	@OnlyIn(Dist.CLIENT)

@@ -3,6 +3,7 @@ package com.simibubi.create.content.equipment.clipboard;
 import org.jetbrains.annotations.NotNull;
 
 import com.simibubi.create.AllDataComponents;
+import com.simibubi.create.content.equipment.clipboard.ClipboardOverrides.ClipboardType;
 import com.simibubi.create.foundation.recipe.ItemCopyingRecipe.SupportsItemCopying;
 
 import net.createmod.catnip.gui.ScreenOpener;
@@ -63,7 +64,8 @@ public class ClipboardBlockItem extends BlockItem implements SupportsItemCopying
 			.addCooldown(heldItem.getItem(), 10);
 		if (world.isClientSide)
 			CatnipServices.PLATFORM.executeOnClientOnly(() -> () -> openScreen(player, heldItem));
-		heldItem.set(AllDataComponents.CLIPBOARD_TYPE, ClipboardOverrides.ClipboardType.EDITING);
+		ClipboardContent content = heldItem.getOrDefault(AllDataComponents.CLIPBOARD_CONTENT, ClipboardContent.EMPTY);
+		heldItem.set(AllDataComponents.CLIPBOARD_CONTENT, content.setType(ClipboardType.EDITING));
 
 		return InteractionResultHolder.success(heldItem);
 	}
@@ -80,7 +82,7 @@ public class ClipboardBlockItem extends BlockItem implements SupportsItemCopying
 
 	@Override
 	public DataComponentType<?> getComponentType() {
-		return AllDataComponents.CLIPBOARD_PAGES;
+		return AllDataComponents.CLIPBOARD_CONTENT;
 	}
 
 }
