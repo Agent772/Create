@@ -44,13 +44,13 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringUtil;
-import net.minecraft.world.item.ItemStack;
 
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -82,10 +82,10 @@ public class ClipboardScreen extends AbstractSimiScreen {
 
 	private final int targetSlot;
 
-	public ClipboardScreen(int targetSlot, ItemStack item, @Nullable BlockPos pos) {
+	public ClipboardScreen(int targetSlot, DataComponentMap components, @Nullable BlockPos pos) {
 		this.targetSlot = targetSlot;
 		this.targetedBlock = pos;
-		reopenWith(item.getOrDefault(AllDataComponents.CLIPBOARD_CONTENT, ClipboardContent.EMPTY));
+		reopenWith(components.getOrDefault(AllDataComponents.CLIPBOARD_CONTENT, ClipboardContent.EMPTY));
 	}
 
 	public void reopenWith(ClipboardContent content) {
